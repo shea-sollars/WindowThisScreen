@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using Vanara.PInvoke;
-using System.Windows.Forms;
 using System.Text;
+using System.Windows.Forms;
+using Vanara.PInvoke;
 
 class Program {
     static User32.HWINEVENTHOOK hook;
@@ -29,7 +29,7 @@ class Program {
 
     // Function to check if a window is a child window
     private static bool IsChildWindow(HWND hwnd) {
-        
+
         IntPtr parentHandle = GetParent(hwnd.DangerousGetHandle());
         return parentHandle != IntPtr.Zero;  // If it has a parent, it is a child window
     }
@@ -106,7 +106,7 @@ class Program {
 
         // Attempt to move the window using more robust flags for handling UWP
         bool moved = User32.SetWindowPos(hwnd, HWND.NULL, newPos.X, newPos.Y, width, height, User32.SetWindowPosFlags.SWP_NOZORDER | User32.SetWindowPosFlags.SWP_NOACTIVATE | User32.SetWindowPosFlags.SWP_NOOWNERZORDER | User32.SetWindowPosFlags.SWP_FRAMECHANGED);
-        
+
         if (!moved) {
             Console.WriteLine($"Failed to move window. Error code: {Marshal.GetLastWin32Error()}");
         } else {
