@@ -1,0 +1,60 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+*.exe
+*.dll
+
+# Rider project files
+.idea/
+
+# User-specific files
+*.rsuser
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Auto-generated files
+*_i.c
+*_p.c
+*.ilk
+*.meta
+*.obj
+*.pch
+*.pdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*.log
+*.vspscc
+*.vssscc
+.vs/
+Thumbs.db
+thumbs.db
+
+# Build directories
+x64/
+x86/
+build/
+bld/
+Debug/
+release/
+
+# JetBrains Rider
+.idea/
+
+# NuGet Packages
+*.nupkg
+**/packages/
+!packages/build/
+
+# Other
+*.log
+*.tlog
+*.lastcodeanalysissucceeded
