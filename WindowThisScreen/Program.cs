@@ -8,9 +8,6 @@ class Program {
 	static User32.HWINEVENTHOOK hook;
 	static User32.SetWindowPosFlags options = User32.SetWindowPosFlags.SWP_NOZORDER | User32.SetWindowPosFlags.SWP_NOACTIVATE | User32.SetWindowPosFlags.SWP_NOOWNERZORDER | User32.SetWindowPosFlags.SWP_FRAMECHANGED;
 
-	[DllImport("user32.dll", SetLastError = true)]
-	private static extern IntPtr GetParent(IntPtr hWnd);  // Import GetParent from user32.dll
-
 	const int SW_HIDE = 0;
 	const int SW_SHOW = 5;
 
@@ -30,9 +27,8 @@ class Program {
 
 	// Function to check if a window is a child window
 	private static bool IsChildWindow(HWND hwnd) {
-
-		IntPtr parentHandle = GetParent(hwnd.DangerousGetHandle());
-		return parentHandle != IntPtr.Zero;  // If it has a parent, it is a child window
+		HWND parentHandle = User32.GetParent(hwnd);
+		return parentHandle.DangerousGetHandle() != IntPtr.Zero;  // If it has a parent, it is a child window
 	}
 
 	// Helper function to check if the window is already on the target screen
@@ -48,7 +44,6 @@ class Program {
 	// Callback function for handling window events
 	private static void WinEventProc(User32.HWINEVENTHOOK hWinEventHook, uint eventType, HWND hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime) {
 		string className = GetWindowClassName(hwnd);
-		//Console.WriteLine($"\nclassName: {className}");
 
 		// Skip child windows by checking if the window has a parent
 		if (IsChildWindow(hwnd)) {
@@ -62,8 +57,6 @@ class Program {
 		}
 
 		if (className.StartsWith("ApplicationFrameWindow")) {
-			// Console.WriteLine($"Detected UWP app window: {className}");
-
 			// Delay moving the entire UWP app to allow for the final position to be set
 			Timer timer = new Timer();
 			timer.Interval = 300;  // 300ms delay
